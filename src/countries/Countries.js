@@ -38,7 +38,8 @@ const handleSearch = (e) => {
               <h2>{country.name.common}</h2>
               <img  alt="countryFlag"  src={country.flags.png} ></img>
               <h3>Capital City : {country.capital}</h3>
-              <h3>Languages <br/>{Object.values(country.languages || {}).map(lang => <li>{lang}</li>)} </h3>
+              <h3 style={{margin:"auto"}}>Languages </h3> 
+              <ul style={{display:"inline-block", padding:"0"}}>{Object.values(country.languages || {}).map(lang => <li>{lang}</li>)}</ul>
               <hr/>
             </div>
           ))} 
