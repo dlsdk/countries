@@ -1,32 +1,39 @@
-import actionTypes from "../actionTypes";
+import {GET_CONTRIES_SUCCESS,GET_CONTRIES_ERROR,GET_CONTRIES_START} from "../actionTypes/contriesActionTypes"
 import axios from "axios";
 
-const GET_CONTRIES_SUCCESS = (val) => {
-    return {type:actionTypes.contriesActionTypes.GET_CONTRIES_SUCCESS, payload:val}
+const getContriesSuccess = (val) => {
+    return {
+        type:GET_CONTRIES_SUCCESS, 
+        payload:val
+    }
 }
 
-const GET_CONTRIES_ERROR = (val) => {
-    return {type:actionTypes.contriesActionTypes.GET_CONTRIES_ERROR, payload:val}
+const getContriesError= (val) => {
+    return {
+        type:GET_CONTRIES_ERROR, 
+        payload:val
+    }
 }
-const GET_CONTRIES_START = (val) => {
-    return {type:actionTypes.contriesActionTypes.GET_CONTRIES_START,payload:val}
+const getCountriesStart = (val) => {
+    return {
+        type:GET_CONTRIES_START,
+        payload:val
+    }
 }
 
-const GET_CONTRIES = () => dispatch => {
-    dispatch(GET_CONTRIES_START());
-    axios.get("https://restcountries.com/v3.1/all").then(response => 
+const getCountries = () => dispatch => {
+    dispatch(getCountriesStart());
+    axios.get("https://restcountries.com/v3.1/all").then((response) => 
     {
         console.log(response.data);
-        dispatch(GET_CONTRIES_SUCCESS(response.data))
+        dispatch(getContriesSuccess(response.data))
 
     }
     ).catch(error => {
-        dispatch(GET_CONTRIES_ERROR(error))
+        dispatch(getContriesError(error))
      })
  }
  
 
-
-
-const countriesActions = {GET_CONTRIES_ERROR,GET_CONTRIES_SUCCESS,GET_CONTRIES};
+const countriesActions = {getCountries};
 export default countriesActions;

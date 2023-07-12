@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import Actions from '../redux/actions';
-import { useDispatch } from 'react-redux';
+import selector from '../redux/selectors';
 
-const {GET_CONTRIES} = Actions.countriesActions
+const {
+  countriesActions : {getCountries}
+} = Actions
+
+const {
+  countriesSelectors: {selectCountry,selectLoading}
+} = selector
+
 
 export default function Countries() {
 
-const [query,setQuery] = useState('');
-const dispatch = useDispatch();
-const {countries,isload} = useSelector(state => state.contriesReducers);
+  const [query,setQuery] = useState('');
+  const dispatch = useDispatch();
+  const countries = useSelector(selectCountry);
+  const isLoad = useSelector(selectLoading);
 
 
-
-useEffect(() => {
-    dispatch(GET_CONTRIES());
+  useEffect(() => {
+    dispatch(getCountries());
     // eslint-disable-next-line 
   }, []);
 
-const handleSearch = (e) => {
-
-  setQuery(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase());
-
-}
+  const handleSearch = (e) => {
+    setQuery(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase());
+  }
 
 
   return (
-      
     <>
-      {isload ? <p>Yükleniyor...</p> : 
+      {isLoad ? <p>Yükleniyor...</p> : 
         <> 
           <h1>COUNTRIES</h1>
-          <label style={{color:'red'}} for="searchinput">Please enter the country name : </label>
+          <label htmlFor='searchinput' style={{color:'red'}}>Please enter the country name : </label>
           <input type='text' id='searchinput' onChange={handleSearch}/>
           {countries.filter(country => country.name.common.includes(query)).map((country,index) => (
             <div key={index}>
@@ -39,7 +43,7 @@ const handleSearch = (e) => {
               <img  alt="countryFlag"  src={country.flags.png} ></img>
               <h3>Capital City : {country.capital}</h3>
               <h3 style={{margin:"auto"}}>Languages </h3> 
-              <ul style={{display:"inline-block", padding:"0"}}>{Object.values(country.languages || {}).map(lang => <li>{lang}</li>)}</ul>
+              <ul style={{display:"inline-block", padding:"0"}}>{Object.values(country.languages || {}).map((lang,index) => <li key={index}>{lang}</li>)}</ul>
               <hr/>
             </div>
           ))} 

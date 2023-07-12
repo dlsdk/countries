@@ -5,7 +5,7 @@ const {GET_CONTRIES_SUCCESS, GET_CONTRIES_ERROR, GET_CONTRIES_START} = actionTyp
 const initialState = {
     countries: [],
     error : '',
-    isload: false,
+    isLoad: false,
 }
 
 const contriesReducers = (state=initialState,action) => {
@@ -15,19 +15,19 @@ const contriesReducers = (state=initialState,action) => {
         case GET_CONTRIES_START:
             return {
                 ...state,
-                isload: true,
+                isLoad: true,
             }
         case GET_CONTRIES_SUCCESS:
             return {
                 ...state,
                 countries: action.payload,
-                isload: false,
+                isLoad: false,
             };
         case GET_CONTRIES_ERROR:
             return {
                 ...state,
                 error: action.payload,
-                isload: false,
+                isLoad: false,
             }
         default:
             return state;
